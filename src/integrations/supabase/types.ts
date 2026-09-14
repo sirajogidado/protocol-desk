@@ -910,6 +910,7 @@ export type Database = {
         Args: { _type: Database["public"]["Enums"]["request_type"] }
         Returns: string
       }
+      storage_object_request_id: { Args: { _name: string }; Returns: string }
     }
     Enums: {
       app_role:
