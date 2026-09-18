@@ -12,7 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAgenciesRouteImport } from './routes/_authenticated/agencies'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedLogisticsRouteImport } from './routes/_authenticated/logistics'
+import { Route as AuthenticatedStaffRouteImport } from './routes/_authenticated/staff'
 import { Route as AuthenticatedRequestsIndexRouteImport } from './routes/_authenticated/requests.index'
 import { Route as AuthenticatedRequestsNewRouteImport } from './routes/_authenticated/requests.new'
 
@@ -30,9 +33,24 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAgenciesRoute = AuthenticatedAgenciesRouteImport.update({
+  id: '/agencies',
+  path: '/agencies',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLogisticsRoute = AuthenticatedLogisticsRouteImport.update({
+  id: '/logistics',
+  path: '/logistics',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStaffRoute = AuthenticatedStaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedRequestsIndexRoute =
@@ -51,14 +69,20 @@ const AuthenticatedRequestsNewRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/agencies': typeof AuthenticatedAgenciesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/logistics': typeof AuthenticatedLogisticsRoute
+  '/staff': typeof AuthenticatedStaffRoute
   '/requests/new': typeof AuthenticatedRequestsNewRoute
   '/requests/': typeof AuthenticatedRequestsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/agencies': typeof AuthenticatedAgenciesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/logistics': typeof AuthenticatedLogisticsRoute
+  '/staff': typeof AuthenticatedStaffRoute
   '/requests/new': typeof AuthenticatedRequestsNewRoute
   '/requests': typeof AuthenticatedRequestsIndexRoute
 }
@@ -67,21 +91,43 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/agencies': typeof AuthenticatedAgenciesRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/logistics': typeof AuthenticatedLogisticsRoute
+  '/_authenticated/staff': typeof AuthenticatedStaffRoute
   '/_authenticated/requests/new': typeof AuthenticatedRequestsNewRoute
   '/_authenticated/requests/': typeof AuthenticatedRequestsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/requests/new' | '/requests/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/agencies'
+    | '/dashboard'
+    | '/logistics'
+    | '/staff'
+    | '/requests/new'
+    | '/requests/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/requests/new' | '/requests'
+  to:
+    | '/'
+    | '/auth'
+    | '/agencies'
+    | '/dashboard'
+    | '/logistics'
+    | '/staff'
+    | '/requests/new'
+    | '/requests'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/agencies'
     | '/_authenticated/dashboard'
+    | '/_authenticated/logistics'
+    | '/_authenticated/staff'
     | '/_authenticated/requests/new'
     | '/_authenticated/requests/'
   fileRoutesById: FileRoutesById
@@ -115,11 +161,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/agencies': {
+      id: '/_authenticated/agencies'
+      path: '/agencies'
+      fullPath: '/agencies'
+      preLoaderRoute: typeof AuthenticatedAgenciesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/logistics': {
+      id: '/_authenticated/logistics'
+      path: '/logistics'
+      fullPath: '/logistics'
+      preLoaderRoute: typeof AuthenticatedLogisticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/staff': {
+      id: '/_authenticated/staff'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof AuthenticatedStaffRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/requests/': {
@@ -140,13 +207,19 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAgenciesRoute: typeof AuthenticatedAgenciesRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedLogisticsRoute: typeof AuthenticatedLogisticsRoute
+  AuthenticatedStaffRoute: typeof AuthenticatedStaffRoute
   AuthenticatedRequestsNewRoute: typeof AuthenticatedRequestsNewRoute
   AuthenticatedRequestsIndexRoute: typeof AuthenticatedRequestsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAgenciesRoute: AuthenticatedAgenciesRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedLogisticsRoute: AuthenticatedLogisticsRoute,
+  AuthenticatedStaffRoute: AuthenticatedStaffRoute,
   AuthenticatedRequestsNewRoute: AuthenticatedRequestsNewRoute,
   AuthenticatedRequestsIndexRoute: AuthenticatedRequestsIndexRoute,
 }
